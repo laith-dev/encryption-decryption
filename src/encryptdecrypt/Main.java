@@ -3,7 +3,7 @@ package encryptdecrypt;
 /**
  * Two algorithms for encryption/decryption:
  * <p>
- * -- Shift: shifts each letter by the specified number according to its order in the alphabet in circle.
+ * -- Shift: shifts each letter by the specified key according to its order in the alphabet in circle.
  * -- Unicode: shift every character by the specified key.
  * <p>
  * The program works from the command line, and it has the following options:
