@@ -1,5 +1,14 @@
 package encryptdecrypt;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Scanner;
+
 /**
  * Two algorithms for encryption/decryption:
  * <p>
@@ -19,127 +28,100 @@ package encryptdecrypt;
  * <p>
  * The Strategy Design Pattern is used.
  */
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class Main {
 
     public static void main(String[] args) {
-
-        Context context = new Context();
+        EncDecManager encDecManager = new EncDecManager();
 
         /*
          * Set default values.
          * */
-        context.setAlgorithm(new Shift());
-        context.setKey(0);
-        context.setMode("enc");
-        context.setDataToBeEncrypted("");
+        encDecManager.setAlgorithm(new Shift());
+        encDecManager.setKey(0);
+        encDecManager.setMode("enc");
+        encDecManager.setInputText("");
 
         // Check if -data option is specified. If so, store it, otherwise keep the default value.
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("-data")) {
-                context.setDataToBeEncrypted(args[i + 1]);
+                encDecManager.setInputText(args[i + 1]);
                 break;
             }
         }
 
         // If -out option specified, store the file name to write the cipher text to.
-        String fileToWriteData = "";
+        String fileToStoreData = "";
 
         // Each argument inserted is followed by its value.
         // i += 2 --> iterate on arguments only, not values.
         for (int i = 0; i < args.length; i += 2) {
             switch (args[i]) {
-
                 case "-alg":
                     if (args[i + 1].equals("shift")) {
-                        context.setAlgorithm(new Shift());
-                    }
-                    else if (args[i + 1].equals("unicode")) {
-                        context.setAlgorithm(new Unicode());
-                    }
-                    else {
-                        System.out.println("Algorithm Unknown!");
+                        encDecManager.setAlgorithm(new Shift());
+                    } else if (args[i + 1].equals("unicode")) {
+                        encDecManager.setAlgorithm(new Unicode());
+                    } else {
+                        System.out.println("EncDecAlgorithm Unknown!");
                     }
                     break;
 
                 case "-mode":
-                    context.setMode(args[i + 1]);
+                    encDecManager.setMode(args[i + 1]);
                     break;
 
                 case "-key":
-                    context.setKey(Integer.parseInt(args[i + 1]));
+                    encDecManager.setKey(Integer.parseInt(args[i + 1]));
                     break;
 
                 case "-in":
-                    // If dataToBeEncrypted is still empty, this means that -data option was not specified therefore,
-                    // get the data from the file.
-                    if (context.getDataToBeEncrypted().isEmpty()) {
-                        String fileToReadDataFrom = args[i + 1];
+                    /* Ignore the -in option if the user has entered the text after -data option, otherwise read data
+                     * from the specified file location after -in option. */
+                    if (encDecManager.getInputText().isEmpty()) {
+                        String fileToGetData = args[i + 1];
 
-                        File file = new File(fileToReadDataFrom);
+                        File file = new File(fileToGetData);
 
                         try (Scanner sc = new Scanner(file)) {
                             // Read all the text in the file as a single string.
                             if (sc.hasNextLine()) {
-                                context.setDataToBeEncrypted(readFileAsString(fileToReadDataFrom));
+                                encDecManager.setInputText(readFileAsString(fileToGetData));
                             }
-                        }
-                        catch (FileNotFoundException e) {
+                        } catch (FileNotFoundException e) {
                             System.out.printf("Error. File Not Found %s.\n", file.getPath());
-                        }
-                        catch (IOException e) {
+                        } catch (IOException e) {
                             System.out.println("Exception occurred! " + Arrays.toString(e.getStackTrace()));
                         }
                     }
                     break;
 
-                // If -out option is specified, store the file name to write the encrypted data to. Otherwise,
-                // print it on the standard output.
+                /* If -out option is specified, store the file name to write the resulted text to. Otherwise,
+                 print it on the standard output. */
                 case "-out":
-                    fileToWriteData = args[i + 1];
+                    fileToStoreData = args[i + 1];
                     break;
             }
         }
 
-        String cipherText = ""; // text after encryption/decryption
-        switch (context.getMode()) {
-
-            case "enc":
-                cipherText = context.encrypt(context.getDataToBeEncrypted().toCharArray(), context.getKey());
-                break;
-
-            case "dec":
-                cipherText = context.decrypt(context.getDataToBeEncrypted().toCharArray(), context.getKey());
-                break;
-        }
+        // Text after encryption/decryption
+        String resultedText = encDecManager.execute();
 
         /* If -out is not specified, print the data to the standard output. Otherwise, store it in a file. */
-        if (fileToWriteData.isEmpty()) {
-            System.out.println(cipherText);
-        }
-        else {
-            File file = new File(fileToWriteData);
+        if (fileToStoreData.isEmpty()) {
+            System.out.println(resultedText);
+        } else {
+            File file = new File(fileToStoreData);
 
             try (PrintWriter writer = new PrintWriter(file)) {
-                writer.print(cipherText);
-            }
-            catch (FileNotFoundException e) {
+                writer.print(resultedText);
+            } catch (FileNotFoundException e) {
                 System.out.printf("Error. File Not Found %s.\n", file.getPath());
             }
         }
 
     }
 
-    public static String readFileAsString(String fileName) throws IOException {
+    private static String readFileAsString(String fileName) throws IOException {
         return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
