@@ -57,9 +57,9 @@ public class Main {
         for (int i = 0; i < args.length; i += 2) {
             switch (args[i]) {
                 case "-alg":
-                    if (args[i + 1].equals("shift")) {
+                    if (args[i + 1].equalsIgnoreCase("shift")) {
                         encDecManager.setAlgorithm(new Shift());
-                    } else if (args[i + 1].equals("unicode")) {
+                    } else if (args[i + 1].equalsIgnoreCase("unicode")) {
                         encDecManager.setAlgorithm(new Unicode());
                     } else {
                         System.out.println("EncDecAlgorithm Unknown!");
