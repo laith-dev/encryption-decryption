@@ -33,32 +33,42 @@ If -out was not specified, print the resulted text to the standard output.
 
 # Example Usages:
 
+Input #1:
+
 > java Main -mode enc -in road_to_treasure.txt -out protected.txt -key 5 -alg unicode
 
 This command must get data from the file road_to_treasure.txt, encrypt the data with the key 5,
 create a file called protected.txt and write the resulted text to it.
 
-> java Main -mode enc -key 5 -data "Welcome to hyperskill!" -alg unicode
+Input #2:
 
-Output:
+> java Main -mode enc -key 5 -data "Hello World, Java!" -alg unicode
 
-\jqhtrj%yt%m~ujwxpnqq&
+Output #2:
 
-> java Main -key 5 -alg unicode -data "\jqhtrj%yt%m~ujwxpnqq&" -mode dec
+Mjqqt%\twqi1%Of{f&
 
-Output:
+Input #3:
 
-Welcome to hyperskill!
+> java Main -key 5 -alg unicode -data "Mjqqt%\twqi1%Of{f&" -mode dec
 
-> java Main -key 5 -alg shift -data "Welcome to hyperskill!" -mode enc
+Output #3:
 
-Output:
+Hello World, Java!
 
-Bjqhtrj yt mdujwxpnqq!
+Input #4:
 
-> java Main -key 5 -alg shift -data "Bjqhtrj yt mdujwxpnqq!" -mode dec
+> java Main -key 5 -alg shift -data "Hello World, Java!" -mode enc
 
-Output:
+Output #4:
 
-Welcome to hyperskill!
+Mjqqt Btwqi, Ofaf!
+
+Input #5:
+
+> java Main -key 5 -alg shift -data "Mjqqt Btwqi, Ofaf!" -mode dec
+
+Output #5:
+
+Hello World, Java!
 
