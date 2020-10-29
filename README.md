@@ -9,21 +9,21 @@ Encrypt-Decrypt your data from the command line using two algorithms:
 
 After compiling the code, run this command (in the same directory as the *.class files):
 
-> java Main -mode mode -data data -alg alg -key key -in file_in -out file_out
+> java Main -mode mode -data data -alg alg -key key -in file_in.txt -out file_out.txt
 
 Where:
 
-mode can be either enc (encryption) or dec (decryption).
+mode: can be either enc (encryption) or dec (decryption).
 
-data is the text to be encrypted/decrypted.
+data: is the text to be encrypted/decrypted.
 
-alg is either Shift of Unicode (case-insensitive).
+alg: is either Shift of Unicode (case-insensitive).
 
-key an integer value specifying how many cells should each letter in the input text moved.
+key: an integer value specifying how many cells should each letter in the input text moved.
 
-file_in is the file to get data from (in case -data option was not specified).
+file_in.txt: is the file to get data from (in case -data option was not specified).
 
-file_out is the file to store the resulted text.
+file_out.txt: is the file to store the resulted text.
 
 # Note:
 
