@@ -25,11 +25,11 @@ file_in is the file to get data from (in case -data option was not specified).
 
 file_out is the file to store the resulted text.
 
-# Note that:
+# Note:
 
 -data overrides -in
 
-If -out was not specified, print the resulted text to the standard output.
+If -out was not specified, the cipher text will be printed to the standard output.
 
 # Example Usages:
 
