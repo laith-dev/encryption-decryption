@@ -20,11 +20,11 @@ import java.util.Scanner;
  * 2- -key <key_value>                               --> default is 0.
  * 3- -mode <mode> ==> "enc" or "dec"                --> default is "enc".
  * 4- -data <text_to_be_encrypted/decrypted>         --> default is empty string.
- * 5- -in <file_name> ==> get the data to be encrypted from "file_name".
+ * 5- -in <file_name> ==> get the data to be encrypted/decrypted from "file_name".
  * 6- -out <file_name> ==> write the cipher text to "file_name".
  * <p>
  * # -data overrides -in.
- * # If -out was not specified, print the cipher text to the standated output.
+ * # If -out was not specified, print the cipher text to the standard output.
  * <p>
  * The Strategy Design Pattern is used.
  */
@@ -103,7 +103,7 @@ public class Main {
             }
         }
 
-        // Text after encryption/decryption
+        // Text after encryption/decryption.
         String resultedText = encDecManager.execute();
 
         /* If -out is not specified, print the data to the standard output. Otherwise, store it in a file. */

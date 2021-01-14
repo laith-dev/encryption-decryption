@@ -7,7 +7,7 @@ package encryptdecrypt;
 public class Shift implements EncDecAlgorithm {
 
     /**
-     * Encrypt the characters in data by the specified key.
+     * Encrypt the characters by the specified key.
      *
      * @param data to be encrypted.
      * @param key  how many cells each letter in data should be moved (forwards).
