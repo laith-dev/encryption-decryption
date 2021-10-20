@@ -1,14 +1,28 @@
 package encryptdecrypt;
 
 /**
- * Context Class that controls the operations of encrypting/decrypting the data.
+ * Context that controls the operations of encrypting/decrypting the data.
  */
 public class EncDecManager {
 
+    /**
+     * The algorithm used to cipher the text data.
+     */
     private EncDecAlgorithm algorithm;
 
+    /**
+     * The key by which each character in the text data is shifted.
+     */
     private int key;
+
+    /**
+     * Encryption or Decryption as defined in {@link EncDecAlgorithm}.
+     */
     private String mode;
+
+    /**
+     * The data text to process.
+     */
     private String inputText;
 
     /**
@@ -18,10 +32,10 @@ public class EncDecManager {
      */
     public String execute() {
         switch (mode) {
-            case "enc":
+            case EncDecAlgorithm.MODE_ENCRYPTION:
                 return this.algorithm.encrypt(inputText.toCharArray(), key);
 
-            case "dec":
+            case EncDecAlgorithm.MODE_DECRYPTION:
                 return this.algorithm.decrypt(inputText.toCharArray(), key);
         }
 
@@ -47,5 +61,4 @@ public class EncDecManager {
     public String getInputText() {
         return inputText;
     }
-
 }

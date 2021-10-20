@@ -1,4 +1,4 @@
-Encrypt-Decrypt your data from the command line using two algorithms:
+Encrypt-Decrypt any text from the command line using two algorithms:
 
 1- Shift: it shifts each letter by the specified number according to its order in the alphabet in a circle
 (i.e. if the letter z is shifted by 1, it becomes a).
@@ -71,4 +71,3 @@ Input #5:
 Output #5:
 
 Hello World, Java!
-

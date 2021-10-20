@@ -4,6 +4,9 @@ package encryptdecrypt;
  * Concrete Strategy -- Encrypt-Decrypt by shifting the characters by key.
  */
 public class Unicode implements EncDecAlgorithm {
+
+    public static final String ALGORITHM_NAME = "unicode";
+
     @Override
     public String encrypt(char[] data, int key) {
         char[] encryptedData = new char[data.length];

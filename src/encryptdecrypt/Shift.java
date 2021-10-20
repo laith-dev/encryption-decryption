@@ -6,8 +6,10 @@ package encryptdecrypt;
  */
 public class Shift implements EncDecAlgorithm {
 
+    public static final String ALGORITHM_NAME = "shift";
+
     /**
-     * Encrypt the characters by the specified key.
+     * Encrypt the characters by the given key.
      *
      * @param data to be encrypted.
      * @param key  how many cells each letter in data should be moved (forwards).
@@ -19,12 +21,12 @@ public class Shift implements EncDecAlgorithm {
 
         for (int i = 0; i < encryptedData.length; i++) {
             // Shift only letters, otherwise, keep the character unchanged.
-            if (String.valueOf(data[i]).matches("[A-Z]")) {
-                encryptedData[i] = (char) ((((data[i] % 65) + key) % 26) + 'A');
-            } else if (String.valueOf(data[i]).matches("[a-z]")) {
-                encryptedData[i] = (char) ((((data[i] % 97) + key) % 26) + 'a');
+            final char currentChar = data[i];
+            if (String.valueOf(currentChar).matches("[A-Za-z]")) {
+                char startingPointChar = Character.isUpperCase(currentChar) ? 'A' : 'a';
+                encryptedData[i] = (char) ((((currentChar % startingPointChar) + key) % 26) + startingPointChar);
             } else {
-                encryptedData[i] = data[i];
+                encryptedData[i] = currentChar;
             }
         }
 
@@ -32,7 +34,7 @@ public class Shift implements EncDecAlgorithm {
     }
 
     /**
-     * Decrypt the characters in data by the specified key.
+     * Decrypt the characters in data by the given key.
      *
      * @param data to be decrypted.
      * @param key  how many cells each letter in data should be moved (backwards).
@@ -44,12 +46,12 @@ public class Shift implements EncDecAlgorithm {
 
         for (int i = 0; i < decryptedData.length; i++) {
             // Shift only letters, otherwise, keep the character unchanged.
-            if (String.valueOf(data[i]).matches("[A-Z]")) {
-                decryptedData[i] = (char) ((data[i] - 65 + 26 - key) % 26 + 65);
-            } else if (String.valueOf(data[i]).matches("[a-z]")) {
-                decryptedData[i] = (char) ((data[i] - 97 + 26 - key) % 26 + 97);
+            final char currentChar = data[i];
+            if (String.valueOf(currentChar).matches("[A-Za-z]")) {
+                char startingPointChar = Character.isUpperCase(currentChar) ? 'A' : 'a';
+                decryptedData[i] = (char) ((currentChar - startingPointChar + 26 - key) % 26 + startingPointChar);
             } else {
-                decryptedData[i] = data[i];
+                decryptedData[i] = currentChar;
             }
         }
 
